@@ -12,7 +12,7 @@ def main():
     generator = WeeklyScheduleGenerator(lessons)
 
     for i in range(constants.totalPopulation):
-        population[i] = generator.generate()
+        population.append(generator.generate())
 
     optimizer = GenericOptimizer(
         WeeklyScheduleFitnessCalculator(),

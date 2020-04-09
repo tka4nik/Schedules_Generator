@@ -18,16 +18,15 @@ class GenericOptimizer:
             for item in range(len(concat_array)):
                 count = item
                 if count:
-                    concat_map[item] = count + 1
+                    concat_map.append(count+1)
                 else:
-                    concat_map[item] = 1
-            print(concat_map)
-            fit = self.fitness_calculator.Calculate(population[0])
+                    concat_map.append(1)
+            fit = self.fitness_calculator.calculate(population[0])
 
         max_fitness = -1
         max_fitness_schedule_index = -1
         for i in range(len(population)):
-            fit = self.fitness_calculator.Calculate(population[i])
+            fit = self.fitness_calculator.calculate(population[i])
             if fit > max_fitness:
                 max_fitness = fit
                 max_fitness_schedule_index = i
@@ -37,7 +36,7 @@ class GenericOptimizer:
         matpool = []
         maxFit = 0
         for i in range(len(population)):
-            fit = self.fitness_calculator.Calculate(population[i])
+            fit = self.fitness_calculator.calculate(population[i])
             if fit > maxFit:
                 maxFit = fit
 
@@ -55,7 +54,7 @@ class GenericOptimizer:
             parentA = population[matpool[a]]
             parentB = population[matpool[b]]
             child = self.crossover.crossover(parentA, parentB)
-            population2[i] = child
+            population2.append(child)
         return population2
 
     def getRandomInt(self, min, max):

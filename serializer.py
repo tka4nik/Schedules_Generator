@@ -11,7 +11,7 @@ class Serializer:
         file = open(path, "w")
         for i in range(constants.daysPerWeek):
             for j in range(constants.lessonsPerDay):
-                file.write(weeklySchedule.getDailyClassSchedule(classId, i).scheduledLessons[j].lesson)
+                file.write(weeklySchedule.getDailyClassSchedule(classId, i).scheduledLessons[j].lesson + " ")
             file.write('\n')
 
 class SerializerFactory:

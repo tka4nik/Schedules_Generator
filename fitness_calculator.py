@@ -1,6 +1,6 @@
 class WeeklyScheduleFitnessCalculator:
     def calculate(self, weeklySchedule):
-        pass
+        return self.lessonsMatch(weeklySchedule)
 
     def lessonsMatch(self, weeklySchedule):
         fitness = 0
@@ -18,7 +18,7 @@ class WeeklyScheduleFitnessCalculator:
                 for j in range(len(dailyClassScheduleB.scheduledLessons)):
                     scheduleA = dailyClassScheduleA.scheduledLessons[i]
                     scheduleB = dailyClassScheduleB.scheduledLessons[j]
-                    if scheduleA.Equals(scheduleB):
+                    if scheduleA.IfEqual(scheduleB):
                         return True
         return False
 
