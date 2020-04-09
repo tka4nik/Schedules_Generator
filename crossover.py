@@ -1,13 +1,15 @@
 from random import random
 
 import model
+import constants
 
 
 class WeeklyScheduleCrossover:
     def getAllClasses(self, weeklySchedule1, weeklySchedule2):
         classes1 = weeklySchedule1.getClasses()
         classes2 = weeklySchedule2.getClasses()
-        allClasses = classes1 + classes2
+        allClasses = set(classes1)
+        allClasses.union(classes2)
         r = set()
         for item in allClasses:
             r.add(item)
@@ -23,17 +25,17 @@ class WeeklyScheduleCrossover:
                 scheduledLessons2 = weeklySchedule2.getDailyClassSchedule(classId, weekDayNumber).scheduledLessons
                 scheduleLessons = self.crossScheduledLesson(scheduledLessons1, scheduledLessons2)
                 newDailyClassSchedules.append(
-                    model.ObjectsFactory.CreateDailyClassSchedule(scheduleLessons, classId, weekDayNumber))
-        return model.ObjectsFactory.CreateWeeklySchedule(newDailyClassSchedules)
+                    model.ObjectsFactory.CreateDailyClassSchedule(self, scheduleLessons, classId, weekDayNumber))
+        return model.ObjectsFactory.CreateWeeklySchedule(self, newDailyClassSchedules)
 
     def crossScheduledLesson(self, scheduledLessons1, scheduledLessons2):
         cross = []
-        for i in range(len(scheduledLessons1)):
+        for i in range(constants.lessonsPerDay):
             rand = round(random())
             if rand == 0:
-                cross[i] = scheduledLessons1[i]
+                cross.append(scheduledLessons1[i])
             else:
-                cross[i] = scheduledLessons2[i]
+                cross.append(scheduledLessons2[i])
         return cross
 
 
