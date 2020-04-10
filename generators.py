@@ -4,12 +4,21 @@ import constants
 import model
 
 
+class WeeklyScheduleGeneratorConfigurationClass:
+    def __init__(self, lessons, classesQty=constants.classesQty,
+                 lessonsPerDay=constants.lessonsPerDay, daysPerWeek=constants.daysPerWeek):
+        self.lessons = lessons  #Список уроков и их количество
+        self.classesQty = classesQty    #Количество классов
+        self.lessonsPerDay = lessonsPerDay  #Количество уроков в день
+        self.daysPerWeek = daysPerWeek  #Количество дней в неделе
+
+
 class WeeklyScheduleGenerator:
-    def __init__(self, lessons):
-        self.lessons = lessons
-        self.classesQty = constants.classesQty
-        self.lessonsPerDay = constants.lessonsPerDay
-        self.daysPerWeek = constants.daysPerWeek
+    def __init__(self, config_class):
+        self.lessons = config_class.lessons
+        self.classesQty = config_class.classesQty
+        self.lessonsPerDay = config_class.lessonsPerDay
+        self.daysPerWeek = config_class.daysPerWeek
         self.ensureEnoughLessons()
         self.lessons_pool = []
 
@@ -26,8 +35,8 @@ class WeeklyScheduleGenerator:
             self.lessons_pool = self.generateLessonsPool()
             for j in range(self.daysPerWeek):
                 scheduleLessons = self.generateScheduleLessons()
-                dailyClassSchedules.append(model.ObjectsFactory.CreateDailyClassSchedule(self,scheduleLessons, i, j))
-        return model.ObjectsFactory.CreateWeeklySchedule(self,dailyClassSchedules)
+                dailyClassSchedules.append(model.ObjectsFactory.CreateDailyClassSchedule(self, scheduleLessons, i, j))
+        return model.ObjectsFactory.CreateWeeklySchedule(self, dailyClassSchedules)
 
     def generateScheduleLessons(self):
         scheduleLessons = []
@@ -47,5 +56,5 @@ class WeeklyScheduleGenerator:
 
 
 class GeneratorsFactory:
-    def defaultGenerator(self):
-        return WeeklyScheduleGenerator()
+    def defaultGenerator(self, config_class):
+        return WeeklyScheduleGenerator(self, config_class)
