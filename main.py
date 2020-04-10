@@ -10,30 +10,33 @@ def main():
     lessons = {"Алгебра": 4, "Геометрия": 3, "Физика": 4, "Английский язык": 1,
                "Информатика": 3}  # Список всех уроков и их количество
     population = []  # Массив популяций
+    classesQty = 4  # Количество классов
+    lessonsPerDay = 3  # Кол-во уроков в день
+    daysPerWeek = 5  # Кол-во учебных дней в неделе
+    populations_qty = 100  # Количество популяций
 
     GeneratorsFactory = generators.GeneratorsFactory  # Фабрика по созданию Генераторов
-    OptimizerFactory = optimizer.OptimizerFactory  # Фабрика по созданию Оптимизаторов расписания
     CrossoverFactory = crossover.CrossoverFactory  # Фабрика по созданию Скрещивателей
     FitnessFactory = fitness_calculator.FitnessFactory  # Фабрика по созданию Калькуляторов пригодности
     SerializerFactory = serializer.SerializerFactory  # Фабрика по созданию Сериализаторов
 
-    generator_config = generators.WeeklyScheduleGeneratorConfigurationClass(lessons)
-    crossover_config = crossover.WeeklyScheduleCrossoverConfigurationClass()
-    serializer_config = serializer.SerializerConfigurationClass()
+    generator_config = generators.WeeklyScheduleGeneratorConfigurationClass(lessons, classesQty, lessonsPerDay,
+                                                                            daysPerWeek)
+    crossover_config = crossover.WeeklyScheduleCrossoverConfigurationClass(lessonsPerDay)
+    serializer_config = serializer.SerializerConfigurationClass(daysPerWeek, lessonsPerDay)
     optimizer_config = optimizer.GenericOptimizerConfigurationClass(
         FitnessFactory.CreateFitnessCalculator(),
-        CrossoverFactory.CreateDefaultCrossover(crossover_config)
+        CrossoverFactory.CreateDefaultCrossover(crossover_config),
+        populations_qty
     )
 
     generator = GeneratorsFactory.defaultGenerator(generator_config)
-    optimizer = OptimizerFactory.default_optimizer(optimizer_config)
 
     for i in range(totalPopulation):
         population.append(generator.generate())
 
-    bestSchedule = optimizer.getBestSchedule(population)
-    serializer = SerializerFactory.CreateSerializer(serializer_config)
-    serializer.serialize(bestSchedule)
+    bestSchedule = optimizer.OptimizerFactory.default_optimizer(optimizer_config).getBestSchedule(population)
+    serializer.SerializerFactory.CreateSerializer(serializer_config).serialize(bestSchedule)
 
 
 def testSet():
