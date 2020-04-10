@@ -48,5 +48,6 @@ class WeeklyScheduleCrossover:
 
 
 class CrossoverFactory:
-    def CreateDefaultCrossover(self, config_class):
-        return WeeklyScheduleCrossover(self, config_class)
+    @staticmethod
+    def CreateDefaultCrossover(config_class):
+        return WeeklyScheduleCrossover(config_class)

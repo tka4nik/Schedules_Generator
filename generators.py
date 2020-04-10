@@ -56,5 +56,6 @@ class WeeklyScheduleGenerator:
 
 
 class GeneratorsFactory:
-    def defaultGenerator(self, config_class):
-        return WeeklyScheduleGenerator(self, config_class)
+    @staticmethod
+    def defaultGenerator(config_class):
+        return WeeklyScheduleGenerator(config_class)

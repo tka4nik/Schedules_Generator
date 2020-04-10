@@ -26,5 +26,6 @@ class Serializer:
 
 
 class SerializerFactory:
-    def CreateSerializer(self, config_class):
-        return Serializer(self, config_class)
+    @staticmethod
+    def CreateSerializer(config_class):
+        return Serializer(config_class)

@@ -79,5 +79,6 @@ class GenericOptimizer:
 
 
 class OptimizerFactory:
-    def default_optimizer(self, config_class):
-        return GenericOptimizer(self, config_class)
+    @staticmethod
+    def default_optimizer(config_class):
+        return GenericOptimizer(config_class)

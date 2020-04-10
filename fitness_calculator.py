@@ -26,5 +26,6 @@ class WeeklyScheduleFitnessCalculator:
 
 
 class FitnessFactory:
-    def CreateFitnessCalculator(self):
+    @staticmethod
+    def CreateFitnessCalculator():
         return WeeklyScheduleFitnessCalculator()

@@ -24,9 +24,12 @@ def main():
                                                                             daysPerWeek)
     crossover_config = crossover.WeeklyScheduleCrossoverConfigurationClass(lessonsPerDay)
     serializer_config = serializer.SerializerConfigurationClass(daysPerWeek, lessonsPerDay)
+
+    fit_calc = FitnessFactory.CreateFitnessCalculator()
+    def_crossover = CrossoverFactory.CreateDefaultCrossover(crossover_config)
     optimizer_config = optimizer.GenericOptimizerConfigurationClass(
-        FitnessFactory.CreateFitnessCalculator(),
-        CrossoverFactory.CreateDefaultCrossover(crossover_config),
+        fit_calc,
+        def_crossover,
         populations_qty
     )
 
