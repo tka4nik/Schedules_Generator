@@ -3,8 +3,8 @@ import constants
 
 class SerializerConfigurationClass:
     def __init__(self, daysPerWeek=constants.daysPerWeek, lessonsPerDay=constants.lessonsPerDay):
-        self.daysPerWeek = daysPerWeek  #Количество дней в неделе
-        self.lessonsPerDay = lessonsPerDay  #Количество уроков в день
+        self.daysPerWeek = daysPerWeek  # РљРѕР»РёС‡РµСЃС‚РІРѕ РґРЅРµР№ РІ РЅРµРґРµР»Рµ
+        self.lessonsPerDay = lessonsPerDay  # РљРѕР»РёС‡РµСЃС‚РІРѕ СѓСЂРѕРєРѕРІ РІ РґРµРЅСЊ
 
 
 class Serializer:
@@ -22,7 +22,7 @@ class Serializer:
         for i in range(constants.daysPerWeek):
             for j in range(constants.lessonsPerDay):
                 file.write(weeklySchedule.getDailyClassSchedule(classId, i).scheduledLessons[j].lesson + " ")
-            file.write('\n')
+            file.write('\r')
 
 
 class SerializerFactory:

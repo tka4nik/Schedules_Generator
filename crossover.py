@@ -6,13 +6,12 @@ import constants
 
 class WeeklyScheduleCrossoverConfigurationClass:
     def __init__(self, lessonsPerDay=constants.lessonsPerDay):
-        self.lessonsPerDay = lessonsPerDay  #Количество уроков в день
+        self.lessonsPerDay = lessonsPerDay  # РљРѕР»РёС‡РµСЃС‚РІРѕ СѓСЂРѕРєРѕРІ РІ РґРµРЅСЊ
 
 
 class WeeklyScheduleCrossover:
     def __init__(self, config_class):
         self.lessonsPerDay = config_class.lessonsPerDay
-
 
     def getAllClasses(self, weeklySchedule1, weeklySchedule2):
         classes1 = weeklySchedule1.getClasses()

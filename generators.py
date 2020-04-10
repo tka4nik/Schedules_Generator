@@ -7,10 +7,10 @@ import model
 class WeeklyScheduleGeneratorConfigurationClass:
     def __init__(self, lessons, classesQty=constants.classesQty,
                  lessonsPerDay=constants.lessonsPerDay, daysPerWeek=constants.daysPerWeek):
-        self.lessons = lessons  #Список уроков и их количество
-        self.classesQty = classesQty    #Количество классов
-        self.lessonsPerDay = lessonsPerDay  #Количество уроков в день
-        self.daysPerWeek = daysPerWeek  #Количество дней в неделе
+        self.lessons = lessons  # РЎРїРёСЃРѕРє СѓСЂРѕРєРѕРІ Рё РёС… РєРѕР»РёС‡РµСЃС‚РІРѕ
+        self.classesQty = classesQty  # РљРѕР»РёС‡РµСЃС‚РІРѕ РєР»Р°СЃСЃРѕРІ
+        self.lessonsPerDay = lessonsPerDay  # РљРѕР»РёС‡РµСЃС‚РІРѕ СѓСЂРѕРєРѕРІ РІ РґРµРЅСЊ
+        self.daysPerWeek = daysPerWeek  # РљРѕР»РёС‡РµСЃС‚РІРѕ РґРЅРµР№ РІ РЅРµРґРµР»Рµ
 
 
 class WeeklyScheduleGenerator:

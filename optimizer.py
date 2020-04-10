@@ -6,9 +6,9 @@ import constants
 
 class GenericOptimizerConfigurationClass:
     def __init__(self, fitness_calculator, crossover, populations_qty=constants.populations_qty):
-        self.fitness_calculator = fitness_calculator    #Объект калькулятора пригодности расписания
-        self.crossover = crossover  #Объект скрещивателя расписаний
-        self.populations_qty = populations_qty  #Количество популяций
+        self.fitness_calculator = fitness_calculator    #РћР±СЉРµРєС‚ РєР°Р»СЊРєСѓР»СЏС‚РѕСЂР° РїСЂРёРіРѕРґРЅРѕСЃС‚Рё СЂР°СЃРїРёСЃР°РЅРёСЏ
+        self.crossover = crossover  #РћР±СЉРµРєС‚ СЃРєСЂРµС‰РёРІР°С‚РµР»СЏ СЂР°СЃРїРёСЃР°РЅРёР№
+        self.populations_qty = populations_qty  #РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРїСѓР»СЏС†РёР№
 
 
 class GenericOptimizer:

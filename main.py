@@ -7,18 +7,18 @@ import fitness_calculator
 
 def main():
     totalPopulation = 100
-    lessons = {"Алгебра": 4, "Геометрия": 3, "Физика": 4, "Английский язык": 1,
-               "Информатика": 3}  # Список всех уроков и их количество
-    population = []  # Массив популяций
-    classesQty = 4  # Количество классов
-    lessonsPerDay = 3  # Кол-во уроков в день
-    daysPerWeek = 5  # Кол-во учебных дней в неделе
-    populations_qty = 100  # Количество популяций
+    lessons = {"РђР»РіРµР±СЂР°": 4, "Р“РµРѕРјРµС‚СЂРёСЏ": 3, "Р¤РёР·РёРєР°": 4, "РђРЅРіР»РёР№СЃРєРёР№ СЏР·С‹Рє": 1,
+               "РРЅС„РѕСЂРјР°С‚РёРєР°": 3}  # РЎРїРёСЃРѕРє РІСЃРµС… СѓСЂРѕРєРѕРІ Рё РёС… РєРѕР»РёС‡РµСЃС‚РІРѕ
+    population = []  # РњР°СЃСЃРёРІ РїРѕРїСѓР»СЏС†РёР№
+    classesQty = 4  # РљРѕР»РёС‡РµСЃС‚РІРѕ РєР»Р°СЃСЃРѕРІ
+    lessonsPerDay = 3  # РљРѕР»-РІРѕ СѓСЂРѕРєРѕРІ РІ РґРµРЅСЊ
+    daysPerWeek = 5  # РљРѕР»-РІРѕ СѓС‡РµР±РЅС‹С… РґРЅРµР№ РІ РЅРµРґРµР»Рµ
+    populations_qty = 100  # РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРїСѓР»СЏС†РёР№
 
-    GeneratorsFactory = generators.GeneratorsFactory  # Фабрика по созданию Генераторов
-    CrossoverFactory = crossover.CrossoverFactory  # Фабрика по созданию Скрещивателей
-    FitnessFactory = fitness_calculator.FitnessFactory  # Фабрика по созданию Калькуляторов пригодности
-    SerializerFactory = serializer.SerializerFactory  # Фабрика по созданию Сериализаторов
+    GeneratorsFactory = generators.GeneratorsFactory  # Р¤Р°Р±СЂРёРєР° РїРѕ СЃРѕР·РґР°РЅРёСЋ Р“РµРЅРµСЂР°С‚РѕСЂРѕРІ
+    CrossoverFactory = crossover.CrossoverFactory  # Р¤Р°Р±СЂРёРєР° РїРѕ СЃРѕР·РґР°РЅРёСЋ РЎРєСЂРµС‰РёРІР°С‚РµР»РµР№
+    FitnessFactory = fitness_calculator.FitnessFactory  # Р¤Р°Р±СЂРёРєР° РїРѕ СЃРѕР·РґР°РЅРёСЋ РљР°Р»СЊРєСѓР»СЏС‚РѕСЂРѕРІ РїСЂРёРіРѕРґРЅРѕСЃС‚Рё
+    SerializerFactory = serializer.SerializerFactory  # Р¤Р°Р±СЂРёРєР° РїРѕ СЃРѕР·РґР°РЅРёСЋ РЎРµСЂРёР°Р»РёР·Р°С‚РѕСЂРѕРІ
 
     generator_config = generators.WeeklyScheduleGeneratorConfigurationClass(lessons, classesQty, lessonsPerDay,
                                                                             daysPerWeek)
