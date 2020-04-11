@@ -39,7 +39,7 @@ def main():
         population.append(generator.generate())
 
     bestSchedule = optimizer.OptimizerFactory.default_optimizer(optimizer_config).getBestSchedule(population)
-    serializer.SerializerFactory.CreateSerializer(serializer_config).serialize(bestSchedule)
+    serializer.SerializerFactory.CreareCsvSerializer(serializer_config).serialize(bestSchedule)
 
 
 def testSet():
