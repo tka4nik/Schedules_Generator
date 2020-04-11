@@ -55,7 +55,7 @@ class CsvSerializer:
             #print(line)
 
             data.append(line.split(","))
-            print(data)
+            #print(data)
 
         path = "class_" + str(classId) + ".csv"
         self.csv_writer(data, path)
