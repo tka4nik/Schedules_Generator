@@ -4,8 +4,10 @@ class WeeklySchedule:
 
     def getDailyClassSchedule(self, classId, weekDayNunmber):
         for i in range(len(self.dailyClassSchedules)):
-            if classId == self.dailyClassSchedules[i].classId and weekDayNunmber == self.dailyClassSchedules[i].weekDayNumber:
+            if classId == self.dailyClassSchedules[i].classId \
+                    and weekDayNunmber == self.dailyClassSchedules[i].weekDayNumber:
                 return self.dailyClassSchedules[i]
+
     def getClasses(self):
         r = set()
         for item in self.dailyClassSchedules:

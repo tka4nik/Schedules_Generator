@@ -4,7 +4,15 @@ import model
 import constants
 
 
+class WeeklyScheduleCrossoverConfigurationClass:
+    def __init__(self, lessonsPerDay=constants.lessonsPerDay):
+        self.lessonsPerDay = lessonsPerDay  # Количество уроков в день
+
+
 class WeeklyScheduleCrossover:
+    def __init__(self, config_class):
+        self.lessonsPerDay = config_class.lessonsPerDay
+
     def getAllClasses(self, weeklySchedule1, weeklySchedule2):
         classes1 = weeklySchedule1.getClasses()
         classes2 = weeklySchedule2.getClasses()
@@ -40,5 +48,6 @@ class WeeklyScheduleCrossover:
 
 
 class CrossoverFactory:
-    def CreateDefaultCrossover(self):
-        return WeeklyScheduleCrossover()
+    @staticmethod
+    def CreateDefaultCrossover(config_class):
+        return WeeklyScheduleCrossover(config_class)

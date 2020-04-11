@@ -4,11 +4,18 @@ from random import randint
 import constants
 
 
+class GenericOptimizerConfigurationClass:
+    def __init__(self, fitness_calculator, crossover, populations_qty=constants.populations_qty):
+        self.fitness_calculator = fitness_calculator    #Объект калькулятора пригодности расписания
+        self.crossover = crossover  #Объект скрещивателя расписаний
+        self.populations_qty = populations_qty  #Количество популяций
+
+
 class GenericOptimizer:
-    def __init__(self, fitness_calculator, crossover, populations_qty, time_of_work):
-        self.fitness_calculator = fitness_calculator
-        self.crossover = crossover
-        self.populations_qty = populations_qty
+    def __init__(self, config_class):
+        self.fitness_calculator = config_class.fitness_calculator
+        self.crossover = config_class.crossover
+        self.populations_qty = config_class.populations_qty
 
     def getBestSchedule(self, population):
         for i in range(self.populations_qty):
@@ -18,7 +25,7 @@ class GenericOptimizer:
             for item in range(len(concat_array)):
                 count = item
                 if count:
-                    concat_map.append(count+1)
+                    concat_map.append(count + 1)
                 else:
                     concat_map.append(1)
             fit = self.fitness_calculator.calculate(population[0])
@@ -72,5 +79,6 @@ class GenericOptimizer:
 
 
 class OptimizerFactory:
-    def default_optimizer(self, fitness_calculator, crossover, populations_qty, time_of_work):
-        return GenericOptimizer(fitness_calculator, crossover, populations_qty, time_of_work)
+    @staticmethod
+    def default_optimizer(config_class):
+        return GenericOptimizer(config_class)
