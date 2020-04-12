@@ -3,22 +3,23 @@ import serializer
 import generators
 import crossover
 import fitness_calculator
+import yaml
 
 
 def main():
-    totalPopulation = 100
-    lessons = {"Алгебра": 4, "Геометрия": 3, "Физика": 4, "Английский язык": 1,
-               "Информатика": 3}  # Список всех уроков и их количество
+    with open('input.yaml') as input_file:
+        config = yaml.safe_load(input_file)
+
+    lessons = config["lessons"]  # Список всех уроков и их количество
     population = []  # Массив популяций
-    classesQty = 4  # Количество классов
-    lessonsPerDay = 3  # Кол-во уроков в день
-    daysPerWeek = 5  # Кол-во учебных дней в неделе
-    populations_qty = 100  # Количество популяций
+    classesQty = config["classesQty"]  # Количество классов
+    lessonsPerDay = config["lessonsPerDay"]  # Кол-во уроков в день
+    daysPerWeek = config["daysPerWeek"]  # Кол-во учебных дней в неделе
+    populations_qty = config["populations_qty"]  # Количество популяций
 
     GeneratorsFactory = generators.GeneratorsFactory  # Фабрика по созданию Генераторов
     CrossoverFactory = crossover.CrossoverFactory  # Фабрика по созданию Скрещивателей
     FitnessFactory = fitness_calculator.FitnessFactory  # Фабрика по созданию Калькуляторов пригодности
-    SerializerFactory = serializer.SerializerFactory  # Фабрика по созданию Сериализаторов
 
     generator_config = generators.WeeklyScheduleGeneratorConfigurationClass(lessons, classesQty, lessonsPerDay,
                                                                             daysPerWeek)
@@ -35,7 +36,7 @@ def main():
 
     generator = GeneratorsFactory.defaultGenerator(generator_config)
 
-    for i in range(totalPopulation):
+    for i in range(populations_qty):
         population.append(generator.generate())
 
     bestSchedule = optimizer.OptimizerFactory.default_optimizer(optimizer_config).getBestSchedule(population)
@@ -48,6 +49,22 @@ def testSet():
     for item in m:
         r.add(item)
     print(r)
+
+
+def testYaml():
+    with open('input.yaml') as input_file:
+        var = yaml.safe_load(input_file)
+    print(var)
+
+    for item in var["lessons"]:
+        print(var["lessons"][item])
+
+    lessons = var["lessons"]
+    print(lessons)
+
+    lessons2 = {"Алгебра": 4, "Геометрия": 3, "Физика": 4, "Английский язык": 1,
+                "Информатика": 3}
+    print(lessons2)
 
 
 if __name__ == '__main__':
