@@ -1,39 +1,28 @@
+import sys
 import optimizer
 import serializer
 import generators
 import crossover
 import fitness_calculator
-import constants
 import yaml
 
 
 def main():
     try:
-        with open('config.yaml') as config_file:
+        with open('config.yaml', 'r', encoding='utf-8') as config_file:
             config = yaml.safe_load(config_file)
         lessons = config["lessons"]  # Список всех уроков и их количество
         population = []  # Массив популяций
         classesQty = config["classesQty"]  # Количество классов
         lessonsPerDay = config["lessonsPerDay"]  # Кол-во уроков в день
-        daysPerWeek = config["daysPerWeek"]  # Кол-во учебных дней в неделе
-        populations_qty = config["populations_qty"]  # Количество популяций
+        daysPerWeek = config.get("daysPerWeek", 5)  # Кол-во учебных дней в учебной неделе
+        populations_qty = config.get("populations_qty", 100)  # Количество популяций
     except FileNotFoundError:
-        print("Не найден файл 'config.yaml'. Используются параметры по дефолту.")
-        lessons = {'Алгебра':4, "Геометрия":3, "Физика":4, "Английский язык":1, "Информакика":3}  # Список всех уроков и их количество
-        population = []  # Массив популяций
-        classesQty = constants.classesQty  # Количество классов
-        lessonsPerDay = constants.lessonsPerDay  # Кол-во уроков в день
-        daysPerWeek = constants.daysPerWeek  # Кол-во учебных дней в неделе
-        populations_qty = constants.populations_qty  # Количество популяций
-    except KeyError:
-        print("Не верно указан один из параметров. Используются параметры по дефолту.")
-        lessons = {'Алгебра': 4, "Геометрия": 3, "Физика": 4, "Английский язык": 1,
-                   "Информакика": 3}  # Список всех уроков и их количество
-        population = []  # Массив популяций
-        classesQty = constants.classesQty  # Количество классов
-        lessonsPerDay = constants.lessonsPerDay  # Кол-во уроков в день
-        daysPerWeek = constants.daysPerWeek  # Кол-во учебных дней в неделе
-        populations_qty = constants.populations_qty  # Количество популяций
+        print("Не найден файл 'config.yaml'.")
+        sys.exit(1)
+    except KeyError as key:
+        print("Не указан ключевой параеметр {}.".format(key))
+        sys.exit(1)
 
     GeneratorsFactory = generators.GeneratorsFactory  # Фабрика по созданию Генераторов
     CrossoverFactory = crossover.CrossoverFactory  # Фабрика по созданию Скрещивателей
