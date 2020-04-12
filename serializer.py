@@ -1,4 +1,5 @@
 import constants
+import csv
 
 
 class SerializerConfigurationClass:
@@ -19,13 +20,52 @@ class Serializer:
 
     def serializeClazzSchedule(self, weeklySchedule, classId, path):
         file = open(path, "w")
-        for i in range(constants.daysPerWeek):
-            for j in range(constants.lessonsPerDay):
+        for i in range(self.daysPerWeek):
+            for j in range(self.lessonsPerDay):
                 file.write(weeklySchedule.getDailyClassSchedule(classId, i).scheduledLessons[j].lesson + " ")
             file.write('\r')
+
+
+class CsvSerializer:
+    def __init__(self, config_class):
+        self.daysPerWeek = config_class.daysPerWeek
+        self.lessonsPerDay = config_class.lessonsPerDay
+
+    def csv_writer(self, data, path):
+        with open(path, "w", newline='') as csv_file:
+            writer = csv.writer(csv_file, delimiter=';')
+            for line in data:
+                writer.writerow(line)
+
+    def serialize(self, weeklySchedule):
+        classes = weeklySchedule.getClasses()
+        for item in classes:
+            self.serializeClazzSchedule_csv(weeklySchedule, item)
+
+    def serializeClazzSchedule_csv(self, weeklySchedule, classId):
+        data = [
+            "Понедельник,Вторник,Среда,Четверг,Пятница".split(",")
+        ]
+        for i in range(self.lessonsPerDay):
+            line = ""
+            for j in range(self.daysPerWeek):
+                line += str(weeklySchedule.getDailyClassSchedule(classId, j).scheduledLessons[i].lesson)
+                line += ","
+            line = line[0:len(line) - 1]
+            #print(line)
+
+            data.append(line.split(","))
+            #print(data)
+
+        path = "class_" + str(classId) + ".csv"
+        self.csv_writer(data, path)
 
 
 class SerializerFactory:
     @staticmethod
     def CreateSerializer(config_class):
         return Serializer(config_class)
+
+    @staticmethod
+    def CreareCsvSerializer(config_class):
+        return CsvSerializer(config_class)
