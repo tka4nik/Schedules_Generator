@@ -9,8 +9,8 @@ import yaml
 
 def main():
     try:
-        with open('config.yaml') as input_file:
-            config = yaml.safe_load(input_file)
+        with open('config.yaml') as config_file:
+            config = yaml.safe_load(config_file)
         lessons = config["lessons"]  # Список всех уроков и их количество
         population = []  # Массив популяций
         classesQty = config["classesQty"]  # Количество классов
