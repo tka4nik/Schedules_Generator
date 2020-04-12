@@ -3,19 +3,37 @@ import serializer
 import generators
 import crossover
 import fitness_calculator
+import constants
 import yaml
 
 
 def main():
-    with open('input.yaml') as input_file:
-        config = yaml.safe_load(input_file)
-
-    lessons = config["lessons"]  # Список всех уроков и их количество
-    population = []  # Массив популяций
-    classesQty = config["classesQty"]  # Количество классов
-    lessonsPerDay = config["lessonsPerDay"]  # Кол-во уроков в день
-    daysPerWeek = config["daysPerWeek"]  # Кол-во учебных дней в неделе
-    populations_qty = config["populations_qty"]  # Количество популяций
+    try:
+        with open('config.yaml') as input_file:
+            config = yaml.safe_load(input_file)
+        lessons = config["lessons"]  # Список всех уроков и их количество
+        population = []  # Массив популяций
+        classesQty = config["classesQty"]  # Количество классов
+        lessonsPerDay = config["lessonsPerDay"]  # Кол-во уроков в день
+        daysPerWeek = config["daysPerWeek"]  # Кол-во учебных дней в неделе
+        populations_qty = config["populations_qty"]  # Количество популяций
+    except FileNotFoundError:
+        print("Не найден файл 'config.yaml'. Используются параметры по дефолту.")
+        lessons = {'Алгебра':4, "Геометрия":3, "Физика":4, "Английский язык":1, "Информакика":3}  # Список всех уроков и их количество
+        population = []  # Массив популяций
+        classesQty = constants.classesQty  # Количество классов
+        lessonsPerDay = constants.lessonsPerDay  # Кол-во уроков в день
+        daysPerWeek = constants.daysPerWeek  # Кол-во учебных дней в неделе
+        populations_qty = constants.populations_qty  # Количество популяций
+    except KeyError:
+        print("Не верно указан один из параметров. Используются параметры по дефолту.")
+        lessons = {'Алгебра': 4, "Геометрия": 3, "Физика": 4, "Английский язык": 1,
+                   "Информакика": 3}  # Список всех уроков и их количество
+        population = []  # Массив популяций
+        classesQty = constants.classesQty  # Количество классов
+        lessonsPerDay = constants.lessonsPerDay  # Кол-во уроков в день
+        daysPerWeek = constants.daysPerWeek  # Кол-во учебных дней в неделе
+        populations_qty = constants.populations_qty  # Количество популяций
 
     GeneratorsFactory = generators.GeneratorsFactory  # Фабрика по созданию Генераторов
     CrossoverFactory = crossover.CrossoverFactory  # Фабрика по созданию Скрещивателей
@@ -52,7 +70,7 @@ def testSet():
 
 
 def testYaml():
-    with open('input.yaml') as input_file:
+    with open('config.yaml') as input_file:
         var = yaml.safe_load(input_file)
     print(var)
 
