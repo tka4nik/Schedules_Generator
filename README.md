@@ -1,1 +1,1 @@
-# SchoolProject-python-version-
+# Schedules Generator
