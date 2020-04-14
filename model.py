@@ -1,4 +1,11 @@
+"""
+Файл, в котором хранятся все составляющие расписания
+"""
+
 class WeeklySchedule:
+    """
+    Главный класс расписания
+    """
     def __init__(self, dailyClassSchedules):
         self.dailyClassSchedules = dailyClassSchedules
 
@@ -16,6 +23,9 @@ class WeeklySchedule:
 
 
 class DailyClassSchedule:
+    """
+    Класс одного дня
+    """
     def __init__(self, scheduledLessons, classId, weekDayNumber):
         self.scheduledLessons = scheduledLessons
         self.classId = classId
@@ -26,6 +36,9 @@ class DailyClassSchedule:
 
 
 class ScheduledLesson:
+    """
+    Класс одного урока
+    """
     def __init__(self, lesson, lessonNumber):
         self.lesson = lesson
         self.lessonNumber = lessonNumber

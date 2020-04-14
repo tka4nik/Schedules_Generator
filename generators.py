@@ -1,5 +1,10 @@
-import random
+"""
+Файл с генераторами. В этом файле хранится генератор расписания со всеми последующими
+генераторами - Недели, дня, урока.
+"""
 
+
+import random
 import constants
 import model
 
@@ -23,6 +28,7 @@ class WeeklyScheduleGenerator:
         self.lessons_pool = []
 
     def ensureEnoughLessons(self):
+        # Проверка на то, что уроков достаточно
         count = 0
         for item in self.lessons:
             count += self.lessons[item]
@@ -30,6 +36,7 @@ class WeeklyScheduleGenerator:
             print('Not enough Lessons!')
 
     def generate(self):
+        # Генерация расписания
         dailyClassSchedules = []
         for i in range(self.classesQty):
             self.lessons_pool = self.generateLessonsPool()
@@ -39,6 +46,7 @@ class WeeklyScheduleGenerator:
         return model.ObjectsFactory.CreateWeeklySchedule(self, dailyClassSchedules)
 
     def generateScheduleLessons(self):
+        # Генерация массива уроков на день
         scheduleLessons = []
         for i in range(self.lessonsPerDay):
             n = round(random.random() * (len(self.lessons_pool) - 1))
@@ -47,6 +55,7 @@ class WeeklyScheduleGenerator:
         return scheduleLessons
 
     def generateLessonsPool(self):
+        # Генерация массива уроков
         newLessons = []
         for item in self.lessons:
             it = self.lessons[item]

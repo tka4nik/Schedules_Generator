@@ -32,7 +32,7 @@ class CsvSerializer:
         self.lessonsPerDay = config_class.lessonsPerDay
 
     def csv_writer(self, data, path):
-        with open(path, "w", newline='') as csv_file:
+        with open(path, "w", newline='', encoding="utf-8") as csv_file:
             writer = csv.writer(csv_file, delimiter=';')
             for line in data:
                 writer.writerow(line)
@@ -44,7 +44,7 @@ class CsvSerializer:
 
     def serializeClazzSchedule_csv(self, weeklySchedule, classId):
         data = [
-            "Понедельник,Вторник,Среда,Четверг,Пятница".split(",")
+            "Понедельник,Вторник,Среда,Четверг,Пятница,Суббота".split(",")
         ]
         for i in range(self.lessonsPerDay):
             line = ""
@@ -57,7 +57,7 @@ class CsvSerializer:
             data.append(line.split(","))
             #print(data)
 
-        path = "class_" + str(classId) + ".csv"
+        path = "outputs/class_" + str(classId) + ".csv"
         self.csv_writer(data, path)
 
 
@@ -67,5 +67,5 @@ class SerializerFactory:
         return Serializer(config_class)
 
     @staticmethod
-    def CreareCsvSerializer(config_class):
+    def CreateCsvSerializer(config_class):
         return CsvSerializer(config_class)

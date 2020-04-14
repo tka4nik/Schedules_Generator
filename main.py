@@ -1,3 +1,7 @@
+"""
+Главный файл программы. Здесь программа получает параметры из конфигурационного файла,
+создает все необходимые объекты и вызывает нужные функции для работы генератора.
+"""
 import sys
 import optimizer
 import serializer
@@ -5,6 +9,7 @@ import generators
 import crossover
 import fitness_calculator
 import yaml
+import constants
 
 
 def main():
@@ -15,8 +20,8 @@ def main():
         population = []  # Массив популяций
         classesQty = config["classesQty"]  # Количество классов
         lessonsPerDay = config["lessonsPerDay"]  # Кол-во уроков в день
-        daysPerWeek = config.get("daysPerWeek", 5)  # Кол-во учебных дней в учебной неделе
-        populations_qty = config.get("populations_qty", 100)  # Количество популяций
+        daysPerWeek = config.get("daysPerWeek", constants.daysPerWeek)  # Кол-во учебных дней в учебной неделе
+        populations_qty = config.get("populations_qty", constants.populations_qty)  # Количество популяций
     except FileNotFoundError:
         print("Не найден файл 'config.yaml'.")
         sys.exit(1)
@@ -30,7 +35,7 @@ def main():
 
     generator_config = generators.WeeklyScheduleGeneratorConfigurationClass(lessons, classesQty, lessonsPerDay,
                                                                             daysPerWeek)
-    crossover_config = crossover.WeeklyScheduleCrossoverConfigurationClass(lessonsPerDay)
+    crossover_config = crossover.WeeklyScheduleCrossoverConfigurationClass(lessonsPerDay, daysPerWeek)
     serializer_config = serializer.SerializerConfigurationClass(daysPerWeek, lessonsPerDay)
 
     fit_calc = FitnessFactory.CreateFitnessCalculator()
@@ -38,7 +43,8 @@ def main():
     optimizer_config = optimizer.GenericOptimizerConfigurationClass(
         fit_calc,
         def_crossover,
-        populations_qty
+        populations_qty,
+        lessonsPerDay
     )
 
     generator = GeneratorsFactory.defaultGenerator(generator_config)
@@ -47,31 +53,7 @@ def main():
         population.append(generator.generate())
 
     bestSchedule = optimizer.OptimizerFactory.default_optimizer(optimizer_config).getBestSchedule(population)
-    serializer.SerializerFactory.CreareCsvSerializer(serializer_config).serialize(bestSchedule)
-
-
-def testSet():
-    m = [1, 2, 3, 3, 3, 3, 4, 5]
-    r = set()
-    for item in m:
-        r.add(item)
-    print(r)
-
-
-def testYaml():
-    with open('config.yaml') as input_file:
-        var = yaml.safe_load(input_file)
-    print(var)
-
-    for item in var["lessons"]:
-        print(var["lessons"][item])
-
-    lessons = var["lessons"]
-    print(lessons)
-
-    lessons2 = {"Алгебра": 4, "Геометрия": 3, "Физика": 4, "Английский язык": 1,
-                "Информатика": 3}
-    print(lessons2)
+    serializer.SerializerFactory.CreateCsvSerializer(serializer_config).serialize(bestSchedule)
 
 
 if __name__ == '__main__':
