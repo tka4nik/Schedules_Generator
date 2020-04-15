@@ -12,9 +12,9 @@ import yaml
 import constants
 
 
-def main():
+def main(directory="./"):
     try:
-        with open('config.yaml', 'r', encoding='utf-8') as config_file:
+        with open(directory+'config.yaml', 'r', encoding='utf-8') as config_file:
             config = yaml.safe_load(config_file)
         lessons = config["lessons"]  # Список всех уроков и их количество
         population = []  # Массив популяций
@@ -57,4 +57,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) > 1:
+        main(sys.argv[1])
+    else:
+        main()
