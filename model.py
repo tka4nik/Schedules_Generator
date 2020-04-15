@@ -1,11 +1,22 @@
+"""
+Файл, в котором хранятся все модели программы
+"""
+
+
 class WeeklySchedule:
+    """
+    Главный класс расписания
+    """
+
     def __init__(self, dailyClassSchedules):
         self.dailyClassSchedules = dailyClassSchedules
 
     def getDailyClassSchedule(self, classId, weekDayNunmber):
         for i in range(len(self.dailyClassSchedules)):
-            if classId == self.dailyClassSchedules[i].classId and weekDayNunmber == self.dailyClassSchedules[i].weekDayNumber:
+            if classId == self.dailyClassSchedules[i].classId \
+                    and weekDayNunmber == self.dailyClassSchedules[i].weekDayNumber:
                 return self.dailyClassSchedules[i]
+
     def getClasses(self):
         r = set()
         for item in self.dailyClassSchedules:
@@ -14,6 +25,10 @@ class WeeklySchedule:
 
 
 class DailyClassSchedule:
+    """
+    Класс одного дня
+    """
+
     def __init__(self, scheduledLessons, classId, weekDayNumber):
         self.scheduledLessons = scheduledLessons
         self.classId = classId
@@ -24,6 +39,10 @@ class DailyClassSchedule:
 
 
 class ScheduledLesson:
+    """
+    Класс одного урока
+    """
+
     def __init__(self, lesson, lessonNumber):
         self.lesson = lesson
         self.lessonNumber = lessonNumber
