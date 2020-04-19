@@ -1,0 +1,74 @@
+@startuml
+
+abstract class Crossover {
+    lessonsPerDay : Integer
+    daysPerWeek  : Integer
+    crossover(WeeklySchedule weeklySchedule1, weeklySchedule2):
+}
+
+class WeeklyScheduleCrossover extends Crossover {
+}
+
+class CrossoverFactory {
+    CreateDefaultCrossover() : Crossover
+}
+
+CrossoverFactory --> WeeklyScheduleCrossover : creates
+
+abstract class FitnessCalculator {
+    calculate(WeeklySchedule weeklySchedule)
+}
+
+class WeeklyScheduleFitnessCalculator extends FitnessCalculator {
+}
+
+class FitnessFactory {
+    CreateFitnessCalculator() : FitnessCalculator
+}
+
+FitnessFactory --> WeeklyScheduleFitnessCalculator : creates
+
+class Optimizer {
+  crossover  : Crossover
+  fitness_calculator : FitnessCalculator 
+  populations_qty : Integer
+  lessonsPerDay : Intgeer
+  getBestSchedule(WeeklySchedule population [])
+}
+
+Optimizer ..> Crossover :uses
+Optimizer ..> FitnessCalculator :uses
+
+
+package Model {
+
+    class WeeklySchedule {
+      dailyClassSchedules : DailyClassSchedule []
+    }
+    
+    class DailyClassSchedule {
+        scheduledLessons : ScheduledLesson []
+        classId : Integer
+        weekDayNumber : Integer
+    }
+    
+    class ScheduledLesson {
+        lesson : String
+        lessonNumber : Integer
+    }
+    
+    WeeklySchedule "0..*" --* DailyClassSchedule
+    DailyClassSchedule "0..*" --* ScheduledLesson
+
+}
+
+package Generators {
+   class WeeklyScheduleGenerator {
+        lessons : String []
+        classesQty : Integer
+        lessonsPerDay : Integer
+        daysPerWeek : Integer
+        lessons_pool : Integer []
+   }
+}
+@enduml
